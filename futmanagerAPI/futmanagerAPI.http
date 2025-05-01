@@ -1,0 +1,6 @@
+@futmanagerAPI_HostAddress = http://localhost:5027
+
+GET {{futmanagerAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
