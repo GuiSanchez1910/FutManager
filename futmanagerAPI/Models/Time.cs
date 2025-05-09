@@ -25,5 +25,11 @@ namespace futmanagerAPI.Models
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
         public string Escudo { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório")]
+        public string Hino { get; set; }
+
+        [Required(ErrorMessage = "Este campo é obrigatório")]
+        public string Pais { get; set; }
     }
 }
