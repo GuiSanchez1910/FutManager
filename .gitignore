@@ -48,3 +48,4 @@ artifacts/
 Thumbs.db
 *.class
 *.pyc
+.fake
