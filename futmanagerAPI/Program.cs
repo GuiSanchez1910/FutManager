@@ -15,6 +15,13 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 
 var app = builder.Build();
 
+// Configurando o pipeline de requisições HTTP.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
