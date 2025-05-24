@@ -9,8 +9,8 @@ interface FormData {
   historia: string;
   estadio: string;
   cor: string;
-  escudo: File | null;
-  hino: File | null;
+  escudo: string;
+  hino: string;
   pais: string;
 }
 
@@ -20,13 +20,11 @@ export default function CadastrarTime() {
     historia: "",
     estadio: "",
     cor: "#6366f1",
-    escudo: null,
-    hino: null,
+    escudo: "",
+    hino: "",
     pais: "",
   });
 
-  const [escudoPreview, setEscudoPreview] = useState<string>("");
-  const [hinoNome, setHinoNome] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false);
 
@@ -37,34 +35,7 @@ export default function CadastrarTime() {
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-
-    if (files && files.length > 0) {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      });
-
-      // Criar preview para o escudo
-      if (name === "escudo") {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          if (e.target?.result) {
-            setEscudoPreview(e.target.result as string);
-          }
-        };
-        reader.readAsDataURL(files[0]);
-      }
-
-      // Mostrar nome do arquivo de áudio
-      if (name === "hino") {
-        setHinoNome(files[0].name);
-      }
-    }
+    }); 
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -72,13 +43,20 @@ export default function CadastrarTime() {
     setIsSubmitting(true);
 
     try {
-      // Simulação de envio para API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("http://localhost:5043/api/times", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-      console.log("Dados do time:", formData);
+      if (!response.ok) {
+        throw new Error("Erro ao cadastrar time");
+      }
+
       setSubmitSuccess(true);
 
-      // Reset do formulário após 3 segundos
       setTimeout(() => {
         setSubmitSuccess(false);
         setFormData({
@@ -86,30 +64,16 @@ export default function CadastrarTime() {
           historia: "",
           estadio: "",
           cor: "#6366f1",
-          escudo: null,
-          hino: null,
+          escudo: "",
+          hino: "",
           pais: "",
         });
-        setEscudoPreview("");
-        setHinoNome("");
       }, 3000);
     } catch (error) {
       console.error("Erro ao cadastrar time:", error);
+      alert("Erro ao cadastrar time");
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const removeFile = (fileType: "escudo" | "hino") => {
-    setFormData({
-      ...formData,
-      [fileType]: null,
-    });
-
-    if (fileType === "escudo") {
-      setEscudoPreview("");
-    } else {
-      setHinoNome("");
     }
   };
 
@@ -184,73 +148,29 @@ export default function CadastrarTime() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="escudo">Escudo</label>
-          <div className={styles.fileInputWrapper}>
-            <input
-              type="file"
-              id="escudo"
-              name="escudo"
-              onChange={handleFileChange}
-              accept="image/*"
-              className={styles.fileInput}
-            />
-            <div className={styles.fileInputButton}>
-              Selecionar imagem do escudo
-            </div>
-          </div>
-
-          {escudoPreview && (
-            <div className={styles.filePreview}>
-              <div className={styles.filePreviewIcon}>🖼️</div>
-              <div className={styles.filePreviewName}>
-                <img
-                  src={escudoPreview}
-                  alt="Preview do escudo"
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div
-                className={styles.filePreviewRemove}
-                onClick={() => removeFile("escudo")}
-              >
-                ✕
-              </div>
-            </div>
-          )}
+          <label htmlFor="escudo">Escudo </label>
+          <input
+            type="text"
+            id="escudo"
+            name="escudo"
+            value={formData.escudo}
+            onChange={handleChange}
+            className={styles.input}
+            placeholder="URL da imagem"
+          />
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="hino">Hino</label>
-          <div className={styles.fileInputWrapper}>
-            <input
-              type="file"
-              id="hino"
-              name="hino"
-              onChange={handleFileChange}
-              accept="audio/*"
-              className={styles.fileInput}
-            />
-            <div className={styles.fileInputButton}>
-              Selecionar arquivo de áudio
-            </div>
-          </div>
-
-          {hinoNome && (
-            <div className={styles.filePreview}>
-              <div className={styles.filePreviewIcon}>🎵</div>
-              <div className={styles.filePreviewName}>{hinoNome}</div>
-              <div
-                className={styles.filePreviewRemove}
-                onClick={() => removeFile("hino")}
-              >
-                ✕
-              </div>
-            </div>
-          )}
+          <input
+            type="text"
+            id="hino"
+            name="hino"
+            value={formData.hino}
+            onChange={handleChange}
+            className={styles.input}
+            placeholder="URL do video no YouTube"
+          />
         </div>
 
         <div className={styles.formGroup}>

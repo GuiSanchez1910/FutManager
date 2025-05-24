@@ -1,5 +1,6 @@
 using futmanagerAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,16 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();    
+    });
+});
 
 var app = builder.Build();
 
@@ -29,7 +40,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
+
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 

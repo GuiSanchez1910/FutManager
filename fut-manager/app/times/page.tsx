@@ -1,37 +1,30 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
 import styles from "../styles/times.module.css";
+import { Time } from "../types/Time";
 
 export default function Times() {
-  // Dados de exemplo para mostrar na interface
-  const [times, setTimes] = useState([
-    {
-      id: 1,
-      nome: "Flamengo",
-      pais: "Brasil",
-      cor: "#ff0000",
-      estadio: "Maracanã",
-      escudo: "https://placehold.co/100x100/ff0000/white?text=FLA",
-    },
-    {
-      id: 2,
-      nome: "Barcelona",
-      pais: "Espanha",
-      cor: "#0000ff",
-      estadio: "Camp Nou",
-      escudo: "https://placehold.co/100x100/0000ff/white?text=BAR",
-    },
-    {
-      id: 3,
-      nome: "Manchester United",
-      pais: "Inglaterra",
-      cor: "#ff0000",
-      estadio: "Old Trafford",
-      escudo: "https://placehold.co/100x100/ff0000/white?text=MAN",
-    },
-  ]);
+  const [times, setTimes] = useState<Time[]>([]);
+  const [erro, setErro] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function carregarTimes() {
+      try {
+        const times = await fetch("http://localhost:5043/api/times");
+        if (!times.ok) throw new Error("Erro ao buscar times");
+        const dados: Time[] = await times.json();
+        setTimes(dados);
+      } catch (err) {
+        setErro("Erro ao buscar times");
+      }
+    }
+
+    carregarTimes();
+  }, []);
+
+  if (erro) return <p>Erro: {erro}</p>;
 
   return (
     <div className={styles.container}>
@@ -47,12 +40,12 @@ export default function Times() {
           <button className={styles.searchButton}>Buscar</button>
         </div>
 
-        <div className={styles.timesList}>
+        <div className={styles.timesList} style={{ padding: '20px' }}>
           {times.map((time) => (
             <div
               key={time.id}
               className={styles.timeCard}
-              style={{ borderLeft: `5px solid ${time.cor}` }}
+              style={{ borderTop: `10px solid ${time.cor}`, padding: '20px  ' }}
             >
               <div className={styles.timeEscudo}>
                 <img src={time.escudo} alt={`Escudo do ${time.nome}`} />
