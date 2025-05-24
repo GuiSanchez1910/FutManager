@@ -1,34 +1,47 @@
+"use client";
+
 import "./globals.css";
 import Link from "next/link";
 import { Inter } from "next/font/google";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "FutManager - Gerenciamento de Times de Futebol",
-  description: "Plataforma para gerenciar times de futebol",
-};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
         <header className="header">
           <nav className="navbar">
             <div className="logo">FutManager</div>
-            <div className="navLinks">
-              <Link href="/">Home</Link>
-              <Link href="/times">Times</Link>
-              <Link href="/cadastrar">Cadastrar Time</Link>
+            <button className="mobileMenuButton" onClick={toggleMobileMenu}>
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
+            <div className={`navLinks ${mobileMenuOpen ? "active" : ""}`}>
+              <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                Home
+              </Link>
+              <Link href="/times" onClick={() => setMobileMenuOpen(false)}>
+                Times
+              </Link>
+              <Link href="/cadastrar" onClick={() => setMobileMenuOpen(false)}>
+                Cadastrar Time
+              </Link>
             </div>
           </nav>
         </header>
 
-        {children}
+        <div className="container">{children}</div>
 
         <footer className="footer">
           <p>© 2025 FutManager - Todos os direitos reservados</p>
