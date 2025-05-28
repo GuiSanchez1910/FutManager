@@ -78,7 +78,7 @@ namespace futmanagerAPI.Controllers
             return Ok("Time removido com sucesso");
         }
 
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTime(int id, [FromBody] Time timeAtualizado)
         {
             var timeExistente = await _appDbContext.Times.FindAsync(id);
