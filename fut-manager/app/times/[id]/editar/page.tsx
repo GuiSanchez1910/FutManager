@@ -24,17 +24,17 @@ export default function Page() {
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchTime() {
+    async function carregarTime() {
       try {
-        const res = await fetch(`http://localhost:5043/api/times/${id}`);
-        if (!res.ok) throw new Error("Erro ao buscar time");
-        const dados: Time = await res.json();
+        const time = await fetch(`http://localhost:5043/api/times/${id}`);
+        if (!time.ok) throw new Error("Erro ao buscar time");
+        const dados: Time = await time.json();
         setTime(dados);
       } catch (err) {
         setErro("Erro ao carregar os dados.");
       }
     }
-    if (id) fetchTime();
+    if (id) carregarTime();
   }, [id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -114,6 +114,10 @@ export default function Page() {
           marginBottom: "30px",
         }}
       >
+
+        <label>
+          <h1>Escudo do Time</h1>
+        </label>
         <input
           name="escudo"
           value={time.escudo}
@@ -126,17 +130,12 @@ export default function Page() {
             border: "1px solid #ccc",
           }}
         />
-        <img
-          src={time.escudo}
-          alt={`Escudo do ${time.nome}`}
-          style={{
-            width: "180px",
-            height: "auto",
-            objectFit: "contain",
-            marginTop: "10px",
-          }}
-        />
 
+        <label>
+          <h1>
+            ID do link do YouTube
+          </h1>
+        </label>
         <input
           name="hino"
           value={time.hino}
@@ -149,17 +148,6 @@ export default function Page() {
             border: "1px solid #ccc",
           }}
         />
-        <iframe
-          width="320"
-          height="180"
-          src={`https://www.youtube.com/embed/${time.hino}`}
-          title={`Hino do ${time.nome}`}
-          allowFullScreen
-          style={{
-            borderRadius: "10px",
-            border: "2px solid #ccc",
-          }}
-        ></iframe>
       </div>
 
       <p style={{ marginBottom: "10px" }}>
@@ -225,20 +213,23 @@ export default function Page() {
         />
       </p>
 
-      <button
-        type="submit"
-        style={{
-          padding: "12px 24px",
-          backgroundColor: textoCor,
-          color: time.cor,
-          fontWeight: "bold",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-        }}
-      >
-        Salvar Alterações
-      </button>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
+        <button
+          type="submit"
+          style={{
+            padding: "12px 24px",
+            backgroundColor: textoCor,
+            color: time.cor,
+            fontWeight: "bold",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Salvar Alterações
+        </button>
+      </div>
+
     </form>
   );
 }
