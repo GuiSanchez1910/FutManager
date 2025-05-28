@@ -59,8 +59,14 @@ export default function Times() {
                   <strong>Estádio:</strong> {time.estadio}
                 </p>
                 <div className={styles.timeActions}>
+                  <Link href={`/times/${time.id}/editar`}>
+                    <button className={styles.viewButton}>Editar</button>
+                  </Link>
                   <Link href={`/times/${time.id}`}>
-                    <button className={styles.viewButton}>Ver Detalhes</button>
+                    <button className={styles.viewButton}>Excluir</button>
+                  </Link>
+                  <Link href={`/times/${time.id}/detalhes`}>
+                    <button className={styles.viewButton}>Detalhes</button>
                   </Link>
                 </div>
               </div>
