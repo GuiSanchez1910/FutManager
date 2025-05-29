@@ -24,28 +24,32 @@ export default function Times() {
     carregarTimes();
   }, []);
 
+  async function removerTime(id: number) {
+    if (!window.confirm("Tem certeza que deseja excluir este time?")) return;
+    try {
+      const resposta = await fetch(`http://localhost:5043/api/times/${id}`, {
+        method: "DELETE",
+      });
+      if (!resposta.ok) throw new Error("Erro ao remover time");
+      setTimes((prev) => prev.filter((time) => time.id !== id));
+    } catch (err) {
+      setErro("Erro ao remover time");
+    }
+  }
+
   if (erro) return <p>Erro: {erro}</p>;
 
   return (
-    <div className={styles.container}>
+    <div>
       <main className={styles.main}>
         <h1 className={styles.title}>Times Cadastrados</h1>
 
-        <div className={styles.searchBar}>
-          <input
-            type="text"
-            placeholder="Buscar times..."
-            className={styles.searchInput}
-          />
-          <button className={styles.searchButton}>Buscar</button>
-        </div>
-
-        <div className={styles.timesList} style={{ padding: '20px' }}>
+        <div className={styles.timesList} style={{ padding: "20px" }}>
           {times.map((time) => (
             <div
               key={time.id}
               className={styles.timeCard}
-              style={{ borderTop: `10px solid ${time.cor}`, padding: '20px  ' }}
+              style={{ borderTop: `10px solid ${time.cor}`, padding: "20px  " }}
             >
               <div className={styles.timeEscudo}>
                 <img src={time.escudo} alt={`Escudo do ${time.nome}`} />
@@ -62,9 +66,12 @@ export default function Times() {
                   <Link href={`/times/${time.id}/editar`}>
                     <button className={styles.viewButton}>Editar</button>
                   </Link>
-                  <Link href={`/times/${time.id}`}>
-                    <button className={styles.viewButton}>Excluir</button>
-                  </Link>
+                  <button
+                    className={styles.viewButton}
+                    onClick={() => removerTime(time.id)}
+                  >
+                    Excluir
+                  </button>
                   <Link href={`/times/${time.id}/detalhes`}>
                     <button className={styles.viewButton}>Detalhes</button>
                   </Link>

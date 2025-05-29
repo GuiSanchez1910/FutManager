@@ -2,7 +2,8 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
-import styles from "../styles/cadastrar.module.css";
+import { useRouter } from "next/navigation";
+import styles from "../../styles/cadastrar.module.css";
 
 interface FormData {
   nome: string;
@@ -15,6 +16,8 @@ interface FormData {
 }
 
 export default function CadastrarTime() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<FormData>({
     nome: "",
     historia: "",
@@ -35,7 +38,7 @@ export default function CadastrarTime() {
     setFormData({
       ...formData,
       [name]: value,
-    }); 
+    });
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -56,7 +59,7 @@ export default function CadastrarTime() {
       }
 
       setSubmitSuccess(true);
-
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setTimeout(() => {
         setSubmitSuccess(false);
         setFormData({
@@ -68,7 +71,8 @@ export default function CadastrarTime() {
           hino: "",
           pais: "",
         });
-      }, 3000);
+        router.push("/times");
+      }, 2000);
     } catch (error) {
       console.error("Erro ao cadastrar time:", error);
       alert("Erro ao cadastrar time");
@@ -103,12 +107,15 @@ export default function CadastrarTime() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="historia">História</label>
+          <label htmlFor="historia" className={styles.required}>
+            História
+          </label>
           <textarea
             id="historia"
             name="historia"
             value={formData.historia}
             onChange={handleChange}
+            required
             className={styles.textarea}
             rows={4}
             placeholder="Conte um pouco sobre a história do time..."
@@ -116,20 +123,25 @@ export default function CadastrarTime() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="estadio">Estádio</label>
+          <label htmlFor="estadio" className={styles.required}>
+            Estádio
+          </label>
           <input
             type="text"
             id="estadio"
             name="estadio"
             value={formData.estadio}
             onChange={handleChange}
+            required
             className={styles.input}
             placeholder="Ex: Old Trafford"
           />
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="cor">Cor Principal</label>
+          <label htmlFor="cor" className={styles.required}>
+            Cor Principal
+          </label>
           <div className={styles.colorPreview}>
             <input
               type="color"
@@ -137,6 +149,7 @@ export default function CadastrarTime() {
               name="cor"
               value={formData.cor}
               onChange={handleChange}
+              required
               className={styles.colorInput}
             />
             <div
@@ -148,26 +161,32 @@ export default function CadastrarTime() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="escudo">Escudo </label>
+          <label htmlFor="escudo" className={styles.required}>
+            Escudo{" "}
+          </label>
           <input
             type="text"
             id="escudo"
             name="escudo"
             value={formData.escudo}
             onChange={handleChange}
+            required
             className={styles.input}
             placeholder="URL da imagem"
           />
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="hino">Hino</label>
+          <label htmlFor="hino" className={styles.required}>
+            Hino
+          </label>
           <input
             type="text"
             id="hino"
             name="hino"
             value={formData.hino}
             onChange={handleChange}
+            required
             className={styles.input}
             placeholder="URL do video no YouTube"
           />

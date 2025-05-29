@@ -10,8 +10,8 @@ using futmanagerAPI.Data;
 namespace futmanagerAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250510202628_Inicial")]
-    partial class Inicial
+    [Migration("20250528225409_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

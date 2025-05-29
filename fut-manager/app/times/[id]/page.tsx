@@ -8,7 +8,7 @@ function corClara(hexColor: string): boolean {
   const g = parseInt(color.substring(2, 4), 16);
   const b = parseInt(color.substring(4, 6), 16);
   const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  return brightness > 180; 
+  return brightness > 180;
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -81,18 +81,28 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
 
       <p style={{ marginBottom: "10px" }}>
-        <FontAwesomeIcon icon={faGlobe} style={{ marginRight: "8px", color: textoCor }} />
+        <FontAwesomeIcon
+          icon={faGlobe}
+          style={{ marginRight: "8px", color: textoCor }}
+        />
         <strong style={{ color: textoCor }}>País:</strong> {time.pais}
       </p>
 
       <p style={{ marginBottom: "10px" }}>
-        <FontAwesomeIcon icon={faLandmark} style={{ marginRight: "8px", color: textoCor }} />
+        <FontAwesomeIcon
+          icon={faLandmark}
+          style={{ marginRight: "8px", color: textoCor }}
+        />
         <strong style={{ color: textoCor }}>Estádio:</strong> {time.estadio}
       </p>
 
       <p style={{ lineHeight: "1.6" }}>
-        <FontAwesomeIcon icon={faBook} style={{ width: "20px", marginRight: "8px", color: textoCor }} />
-        <strong style={{ color: textoCor }}>História:</strong><br />
+        <FontAwesomeIcon
+          icon={faBook}
+          style={{ width: "20px", marginRight: "8px", color: textoCor }}
+        />
+        <strong style={{ color: textoCor }}>História:</strong>
+        <br />
         {time.historia}
       </p>
     </div>
