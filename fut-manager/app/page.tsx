@@ -16,7 +16,7 @@ export default function Home() {
           <Link href="/times" className={styles.button}>
             Ver Times Cadastrados
           </Link>
-          <Link href="/cadastrar" className={styles.button}>
+          <Link href="/times/cadastrar" className={styles.button}>
             Cadastrar Novo Time
           </Link>
         </div>
