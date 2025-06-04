@@ -15,7 +15,7 @@ function corClara(hexColor: string): boolean {
   return brightness > 180;
 }
 
-export default function Page() {
+export default function EditarTime() {
   const router = useRouter();
   const params = useParams();
   const id = params?.id as string;

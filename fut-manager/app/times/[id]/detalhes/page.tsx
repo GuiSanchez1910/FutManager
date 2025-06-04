@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { Time } from "../../../types/Time";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faLandmark, faGlobe } from "@fortawesome/free-solid-svg-icons";
@@ -8,17 +12,33 @@ function corClara(hexColor: string): boolean {
   const g = parseInt(color.substring(2, 4), 16);
   const b = parseInt(color.substring(4, 6), 16);
   const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  return brightness > 180; 
+  return brightness > 180;
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const dados = await fetch(`http://localhost:5043/api/times/${params.id}`);
+export default function DetalhesTime() {
+  const params = useParams();
+  const id = params?.id as string;
 
-  if (!dados.ok) {
-    return <p>Erro ao carregar dados do time</p>;
-  }
+  const [time, setTime] = useState<Time | null>(null);
+  const [erro, setErro] = useState<string | null>(null);
 
-  const time: Time = await dados.json();
+  useEffect(() => {
+    async function carregarTime() {
+      try {
+        const resposta = await fetch(`http://localhost:5043/api/times/${id}`);
+        if (!resposta.ok) throw new Error("Erro ao carregar dados");
+        const dados: Time = await resposta.json();
+        setTime(dados);
+      } catch (error) {
+        setErro("Erro ao carregar dados do time");
+      }
+    }
+
+    if (id) carregarTime();
+  }, [id]);
+
+  if (erro) return <p>{erro}</p>;
+  if (!time) return <p>Carregando...</p>;
 
   const textoCor = corClara(time.cor) ? "#000000" : "#ffffff";
 
@@ -28,7 +48,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         maxWidth: "960px",
         margin: "40px auto",
         padding: "32px",
-        backgroundColor: `${time.cor}`,
+        backgroundColor: time.cor,
         borderRadius: "16px",
         boxShadow: "0 6px 16px rgba(0,0,0,0.15)",
         fontFamily: "Segoe UI, sans-serif",
@@ -42,7 +62,6 @@ export default async function Page({ params }: { params: { id: string } }) {
           fontSize: "2.75rem",
           fontWeight: "bold",
           textTransform: "uppercase",
-          color: textoCor,
         }}
       >
         {time.nome}
