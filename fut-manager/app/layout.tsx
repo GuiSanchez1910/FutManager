@@ -6,8 +6,8 @@ config.autoAddCss = false;
 import "./globals.css";
 import Link from "next/link";
 import { Inter } from "next/font/google";
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
+import Navbar from "./Components/navbar";
+import Footer from "./Components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
