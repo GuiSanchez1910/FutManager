@@ -1,0 +1,335 @@
+.main {
+  padding: 2rem 0;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 1rem;
+  color: var(--text);
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+.searchBar {
+  display: flex;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  transition: var(--transition);
+  background-color: var(--card-bg);
+  color: var(--text);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.searchButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.searchButton:hover {
+  background-color: var(--primary-hover);
+}
+
+.searchButton::before {
+  content: "🔍";
+  margin-right: 0.5rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filterButton {
+  background-color: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filterButton:hover, .filterButton.active {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.timesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.timeCard {
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.timeCard:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+  border-color: var(--primary);
+}
+
+.timeCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+}
+
+.timeHeader {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.timeEscudo {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.timeEscudo::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 25px;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(10px);
+}
+
+.timeEscudo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.timeInfo {
+  flex: 1;
+}
+
+.timeInfo h2 {
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  font-size: 1.5rem;
+}
+
+.timeDetails {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeDetail {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.timeDetailIcon {
+  margin-right: 0.75rem;
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.timeDetailLabel {
+  color: var(--text-secondary);
+  margin-right: 0.5rem;
+}
+
+.timeDetailValue {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.timeActions {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.viewButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  text-align: center;
+  background-color: var(--primary);
+  color: white;
+}
+
+.viewButton:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.viewButton::after {
+  content: "→";
+  margin-left: 0.5rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.emptyState h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.emptyState p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.emptyStateButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  text-align: center;
+  background-color: var(--primary);
+  color: white;
+}
+
+.emptyStateButton:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.paginationButton {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background-color: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.paginationButton:hover, .paginationButton.active {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .timesList {
+    grid-template-columns: 1fr;
+  }
+  
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    justify-content: flex-start;
+  }
+  
+  .filterButton {
+    white-space: nowrap;
+  }
+}
