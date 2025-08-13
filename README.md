@@ -5,6 +5,9 @@ O usuário poderá cadastrar diferentes times de futebol e gerencia-los.
 
 Esta API simula o cadastro de times. Permitindo que o usuário crie, edite e exclua-os. 
 
+LINK DO VÍDEO DE DEMONSTRAÇÃO
+https://www.youtube.com/watch?v=9Us_CyHClWc
+
 👥 Integrantes da Dupla
 Guilherme Cerqueira Sanchez - GuiSanchez1910
 Nicolas Perandré Rapp - nicolasrapp05
